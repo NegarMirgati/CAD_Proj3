@@ -5,13 +5,18 @@ module Controller #(parameter N, parameter d, parameter Q)(input clk, input rst,
 					                   output reg write_x, output reg write_w,
 					                   output reg res_write, clear_acc,
 					                   output reg done,
-					                   output reg[N-1:0]x);
+							   output reg memRead_x,
+							   output reg memRead_w,
+							   output reg[d-1:0] index_d_x,
+							   output reg[d-1:0] index_d_w,
+							   output reg[Q-1:0] addr_w,
+					                   output reg[Q-1:0] addr_x);
 
 reg[2:0] state;
 reg[2:0] next_state;
 
 reg[d-1:0] d_cnt = {(d){1'b0}};
-reg[Q-1:0] q_cnt = {(Q){1'b0}};
+reg[Q-1:0] q_cnt = {(d) {1'b0}};
 
 reg d_flag = 1'b0;
 reg q_flag = 1'b0;
@@ -33,6 +38,7 @@ else
 end
 
 always @(*) begin
+
 next_state = state0;
 
 case (state)
@@ -42,6 +48,7 @@ state1 : next_state = state2;
 state2 : next_state = d_flag ? state3 : state1;
 state3 : next_state = state4;
 state4 : next_state = q_flag ? state5 : state1;
+state5 : next_state = state0;
 default: next_state = state0;
 
 endcase
@@ -62,7 +69,6 @@ state0 : begin
     write_x = 1'b0;
     write_w = 1'b0;
     done = 1'b0;
-    res_write = 1'b0;
 
 end
 
@@ -75,15 +81,23 @@ ready = 1'b0;
 acc_write = 1'b0;
 done = 1'b0;
 
-if(d_cnt < d)
-    d_cnt <= d_cnt + 1;
+if(d_cnt < d - 1)
+    d_cnt = d_cnt + 1;
 else 
-    d_flag <= 1'b1;
+    d_flag = 1'b1;
 
-if(q_cnt < Q)
-    q_cnt <= q_cnt + 1;
+if(q_cnt < Q - 1)
+    q_cnt = q_cnt + 1;
 else
-    q_cnt <= 1'b1;
+    q_cnt = 1'b1;
+
+addr_x = q_cnt;
+addr_w = q_cnt;
+index_d_x = d_cnt;
+index_d_w = d_cnt;
+
+
+
 
 end
 
@@ -131,8 +145,11 @@ end
 
 default: begin
 	{done, clear_acc, ready, res_write, acc_write, write_x, write_w} = 7'd0;
-         x = {(N){1'b0}};
-	 weight = {(N){1'b0}};
+         addr_x = {(Q){1'b0}};
+	 addr_w = {(Q){1'b0}};
+	 index_d_x = {(d){1'b0}};
+	 index_d_w = {(d){1'b0}};
+
 end
 
 

@@ -1,31 +1,51 @@
+`timescale 1ns/1ns
 module tb #(parameter Q = 100 ,parameter  d = 3 , parameter N = 16)();
 
-reg [N-1:0] weight_vector [0:Q-1][0:d-1];
-reg [N-1:0] x_vector [0:Q-1][0:d-1];
-integer i,j;
+reg clk = 0;
+reg rst = 0;
+reg st = 0;
 
-integer seed = 1;
-integer seed1 = 2;
+Neuron #(N,Q,d) n(.clk(clk), .rst(rst), .st(st));
 
 initial begin
 
-#37
-for( i = 0; i <= Q-1; i= i+1 )begin
- for ( j=0; j<=d-1; j=j+1) 
-   begin
-      weight_vector[i][j] = {$random(seed)} % 2**(N);
-   end
-   end
-  //$display("%p",weight_vector);
+#113
+rst = 1;
 
-for( i = 0; i <= Q-1; i= i+1 )begin
- for ( j=0; j<=d-1; j=j+1) 
-   begin
-      x_vector[i][j] = {$random(seed1)} % 2**(N);
-   end
-   end
-#1000
-  $stop;
+#1133
+
+clk = ~clk;
+
+#1113
+
+clk = ~clk;
+
+#1113
+
+rst = 0;
+
+#1113
+
+st = 0;
+
+#1113
+
+st = 1;
+
+#1113
+
+clk = ~ clk;
+
+#1113
+
+clk = ~clk;
+
+#1113 
+
+st = 0;
+
+repeat(10000) #1133 clk = ~clk;
+
 end
 
 endmodule
