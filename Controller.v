@@ -76,14 +76,14 @@ acc_write = 1'b0;
 done = 1'b0;
 
 if(d_cnt < d)
-    d_cnt = d_cnt + 1;
+    d_cnt <= d_cnt + 1;
 else 
-    d_flag = 1'b1;
+    d_flag <= 1'b1;
 
 if(q_cnt < Q)
-    q_cnt = q_cnt + 1;
+    q_cnt <= q_cnt + 1;
 else
-    q_cnt = 1'b1;
+    q_cnt <= 1'b1;
 
 end
 
