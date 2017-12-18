@@ -9,6 +9,7 @@ integer i,j;
 integer seed = 1;
 
 initial begin
+
 for( i = 0; i <= Q - 1; i = i+1 )begin
  for ( j=0; j<= d - 1; j = j + 1) 
    begin

@@ -1,7 +1,7 @@
 `timescale 1ns/1ns
 module Controller #(parameter N, parameter d, parameter Q)(input clk, input rst, input st, 
 					                   output reg acc_write,
-					     		   output reg ready, output reg[N-1:0] weight,
+					     		   output reg ready,
 					                   output reg write_x, output reg write_w,
 					                   output reg res_write, clear_acc,
 					                   output reg done,
@@ -65,9 +65,12 @@ case (state)
 state0 : begin
 
     acc_write = 1'b0;
+    clear_acc = 1'b0;
     ready = 1'b0;
     write_x = 1'b0;
     write_w = 1'b0;
+    memRead_x = 1'b0;
+    memRead_w = 1'b0;
     done = 1'b0;
 
 end
@@ -77,7 +80,10 @@ state1 : begin
 
 write_x = 1'b1;
 write_w = 1'b1;
+clear_acc = 1'b0;
 ready = 1'b0;
+memRead_x = 1'b1;
+memRead_w = 1'b1;
 acc_write = 1'b0;
 done = 1'b0;
 
@@ -89,7 +95,7 @@ else
 if(q_cnt < Q - 1)
     q_cnt = q_cnt + 1;
 else
-    q_cnt = 1'b1;
+    q_flag = 1'b1;
 
 addr_x = q_cnt;
 addr_w = q_cnt;
@@ -108,8 +114,12 @@ state2: begin
 
 write_x = 1'b0;
 write_w = 1'b0;
+
+memRead_x = 1'b0;
+memRead_w = 1'b0;
+
 acc_write = 1'b1;
-ready = 1'b1;
+ready = 1'b0;
 done = 1'b0;
 
 end
@@ -118,9 +128,11 @@ end
 state3: begin
 
 acc_write = 1'b0;
-ready = 1'b0;
+ready = 1'b1;
 res_write = 1'b1;
 done = 1'b0;
+d_cnt = {(d){1'b0}};
+d_flag = 1'b0;
 
 end
 
@@ -139,12 +151,14 @@ end
 state5: begin
 
 clear_acc = 1'b0;
+q_cnt = {(Q){1'b0}};
+q_flag = 1'b0;
 done = 1'b1;
 
 end
 
 default: begin
-	{done, clear_acc, ready, res_write, acc_write, write_x, write_w} = 7'd0;
+	{done, clear_acc, ready, res_write, acc_write, write_x, write_w, memRead_x, memRead_w} = 9'd0;
          addr_x = {(Q){1'b0}};
 	 addr_w = {(Q){1'b0}};
 	 index_d_x = {(d){1'b0}};

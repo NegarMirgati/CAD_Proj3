@@ -3,8 +3,6 @@ module Datapath #(parameter N, parameter Q, parameter d) (input clk, input rst, 
 				input ready, input clear_acc, input memRead_x, input memRead_w,
 				input x_write, input w_write, input res_write, input [Q-1:0] addr_x,
 				input [Q-1:0] addr_w, input [d-1:0] index_d_x, input[d-1:0] index_d_w,
-				input [N-1:0] weight,
-				input [N-1:0] x ,
                                 output[N-1:0] data_out);
 
 wire [N-1:0] acc_in;
@@ -40,10 +38,10 @@ assign acc_in = add_out;
 assign add_in1 = mult_out;
 assign add_in2 = acc_out;
 assign af_in = acc_out;
-assign res_in = acc_out;
+assign res_in = af_out;
 assign data_out = res_out;
-assign mem_out_x = x_in;
-assign mem_out_w = w_in;
+assign x_in = mem_out_x;
+assign w_in = mem_out_w;
 
 
 endmodule

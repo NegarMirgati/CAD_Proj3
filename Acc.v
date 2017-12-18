@@ -6,7 +6,7 @@ reg[N-1:0] data;
 always @(posedge clk, posedge rst) begin
 
 if(rst)
-	data<= {(N){1'b0}};
+	data <= {(N){1'b0}};
 
 else if(clear_acc)
 
