@@ -9,8 +9,9 @@ module Controller #(parameter N, parameter d, parameter Q)(input clk, input rst,
 
 reg[2:0] state;
 reg[2:0] next_state;
-reg[d-1:0] d_cnt;
-reg[Q-1:0] q_cnt;
+
+reg[d-1:0] d_cnt = {(d){1'b0}};
+reg[Q-1:0] q_cnt = {(Q){1'b0}};
 
 reg d_flag = 1'b0;
 reg q_flag = 1'b0;
