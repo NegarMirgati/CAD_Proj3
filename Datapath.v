@@ -1,4 +1,5 @@
-module Datapath #(parameter N, parameter Q, parameter d) (input clk, input rst, input acc_en,input ready,
+module Datapath #(parameter N, parameter Q, parameter d) (input clk, input rst, input acc_en,
+				input ready, input clear_acc,
 				input [N-1:0] weight,
 				input [N-1:0] x ,
                                 output data_out);
@@ -12,7 +13,7 @@ reg [N-1:0] mult_out;
 reg [N-1:0] af_in;
 reg [N-1:0] af_out;
 
-Acc #(N) acc(.clk(clk), .rst(rst), .en(acc_en), .in(acc_in), .out(acc_out));
+Acc #(N) acc(.clk(clk), .rst(rst),.clear_acc(claer_acc), .en(acc_en), .in(acc_in), .out(acc_out));
 Multiplier #(N) mult(.a(x), .w(weight), .out(mult_out));
 Adder #(N) adder(.num1(add_in1), .num2(add_in2),.out(add_out));
 ActivationFunc #(N) af(.ready(ready), .in(af_in), .out(af_out));
