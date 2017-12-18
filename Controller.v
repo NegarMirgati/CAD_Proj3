@@ -62,6 +62,7 @@ state0 : begin
     write_x = 1'b0;
     write_w = 1'b0;
     done = 1'b0;
+    res_write = 1'b0;
 
 end
 
