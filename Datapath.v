@@ -23,7 +23,7 @@ wire [N-1:0] x_in;
 wire [N-1:0] w_in;
 
 
-Acc #(N) acc(.clk(clk), .rst(rst),.clear_acc(claer_acc), .en(acc_en), .in(acc_in), .out(acc_out));
+Acc #(N) acc(.clk(clk), .rst(rst),.clear_acc(clear_acc), .en(acc_en), .in(acc_in), .out(acc_out));
 Multiplier #(N) mult(.a(x_out), .w(w_out), .out(mult_out));
 Adder #(N) adder(.num1(add_in1), .num2(add_in2),.out(add_out));
 ActivationFunc #(N) af(.ready(ready), .in(af_in), .out(af_out));

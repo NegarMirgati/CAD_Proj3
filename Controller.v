@@ -87,20 +87,20 @@ memRead_w = 1'b1;
 acc_write = 1'b0;
 done = 1'b0;
 
-if(d_cnt < d - 1)
+if(d_cnt < d )
     d_cnt = d_cnt + 1;
 else 
     d_flag = 1'b1;
 
-if(q_cnt < Q - 1)
+if(q_cnt < Q )
     q_cnt = q_cnt + 1;
 else
     q_flag = 1'b1;
 
-addr_x = q_cnt;
-addr_w = q_cnt;
-index_d_x = d_cnt;
-index_d_w = d_cnt;
+addr_x = q_cnt - 1;
+addr_w = q_cnt - 1;
+index_d_x = d_cnt - 1;
+index_d_w = d_cnt - 1;
 
 
 

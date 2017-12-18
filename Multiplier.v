@@ -19,8 +19,10 @@ module Multiplier #(parameter N)(input [N-1:0] a, input [N-1:0] w, output [N-1:0
 
  end
 
- assign out[N-1] = ( (~a[N-1] && w[N-1] ) || (a[N-1] && ~w[N-1]) ) ? 1'b1 : 1'b0;   // 0-1 , 1-0 sign = 1 other. 0
- assign out[N-2:0] = res[2*N -4: N];     // Delete LSB's
+ assign out[N-1] = (a[N-1] ^ w[N-1]) ? 1'b1 : 1'b0;   // 0-1 , 1-0 sign = 1 other. 0
+ //assign out[N-2:0] = res[2*N -4: N];     // Delete LSB's
+
+assign out[N-2:0] = res[N-2: 0]; 
  
 
 endmodule
