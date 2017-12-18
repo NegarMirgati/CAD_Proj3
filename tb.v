@@ -1,4 +1,3 @@
-
 module tb #(parameter Q = 100 ,parameter  d = 3 , parameter N = 16)();
 
 reg [N-1:0] weight_vector [0:Q-1][0:d-1];

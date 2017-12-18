@@ -1,3 +1,4 @@
+`timescale 1ns/1ns
 module adder #(parameter N)(input [N-1:0] num1, input [N-1:0] num2, output [N-1:0] out  );
 
 reg [N-1:0] res;
