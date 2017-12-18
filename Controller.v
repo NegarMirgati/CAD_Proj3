@@ -1,7 +1,6 @@
 `timescale 1ns/1ns
 module Controller #(parameter N, parameter d, parameter Q)(input clk, input rst, input st, 
 					                   output reg acc_write,
-                   					   output reg rst_dp,
 					     		   output reg ready, output reg[N-1:0] weight,
 					                   output reg write_x, output reg write_w,
 					                   output reg res_write, clear_acc,
@@ -57,7 +56,6 @@ case (state)
 
 state0 : begin
 
-    rst_dp = 1'b1;
     acc_write = 1'b0;
     ready = 1'b0;
     write_x = 1'b0;
